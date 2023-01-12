@@ -6,11 +6,11 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:26:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/11 21:34:11 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/12 22:17:41 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../includes/so_long.h"
 #include "get_next_line.h"
 
 void	check_char(char *ptr)
@@ -87,54 +87,20 @@ void	check_map(char *ptr)
 int	main(int argc, char **argv)
 {
 	char	*s;
-	int		i = 0;
-	char	*ptr;
-	char	**map;
+	t_list 	*map;
 	int 	fd;
 
 	if (argc < 2)
 		return (0);
 	fd = open(argv[1], O_RDONLY);
-
-	ptr = get_next_line(fd);
-	if (!ptr)
-		return (0);
-	while (ptr[i])
+	map = NULL;
+	while (s)
 	{
 		s = get_next_line(fd);
-		if (!s)
-			break ;
-		ptr = ft_strjoin(ptr, s);
-		free(s);
-		i++;
+		ft_lstadd_back(ft_lstnew(s), );
+		
 	}
-	map = ft_split();
-	printf("%s", ptr);
+
 	// check_map(ptr);
     // printf("%s",ptr);
 }
-// int	main(int argc, char **argv)
-// {
-// 	// char	*s;
-// 	char	**ptr;
-// 	int 	fd;
-// 	int i;
-
-// 	i = 0;
-// 	if (argc < 2)
-// 		return (0);
-// 	ptr = NULL;
-// 	// ptr = ft_calloc((ft_strlen()+ 1), sizeof(char *));
-// 	// if (!ptr)
-// 	// 	return (NULL);
-// 	fd = open(argv[1], O_RDONLY);
-// 	ptr[0] = get_next_line(fd);
-// 	// while (ptr[i])
-// 	// {
-// 	// 	ptr[i] = get_next_line(fd);
-// 	// 	i++;
-// 	// }
-// 	// printf("%s", ptr[1]);
-// 	// check_map(ptr);
-//     // printf("%s",ptr);
-// }
