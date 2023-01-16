@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 07:26:28 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/12 22:14:13 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/05 20:18:57 by mmoumani          #+#    #+#             */
+/*   Updated: 2023/01/13 22:51:19 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-t_list	*ft_lstnew(char *content)
+size_t	ft_strlen(const char *str)
 {
-	t_list	*node;
+	size_t	i;
 
-	node = malloc(sizeof(t_list));
-	if (!node)
-		return (NULL);
-	node->content = content;
-	node->next = NULL;
-	return (node);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

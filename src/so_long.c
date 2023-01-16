@@ -6,101 +6,82 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:26:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/12 22:17:41 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/16 02:59:13 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 #include "get_next_line.h"
+#include <mlx.h>
 
-void	check_char(char *ptr)
+void	graphic(char **map, int col_len, int row_len)
 {
-	int	i;
+	int		i;
+	int		j;
+	int		k;
+	t_data	data;
 
+	data.mlx = mlx_init();
+	data.mlx_win = mlx_new_window(data.mlx, row_len * 50, col_len * 50, "so_long");
 	i = 0;
-	while (ptr[i])
+	while (map[i])
 	{
-		if (ptr[i] == '1' || ptr[i] == '0' || ptr[i] == '\n')
-			i++;
-		else if (ptr[i] == 'P' || ptr[i] == 'C' || ptr[i] == 'E')
-			i++;
-		else
+		j = 0;
+		while (map[i][j])
 		{
-			printf("Use the valid characters (0, 1, P, C, E)");
-			exit(0);
-		}
-	}
-}
-
-int	check_newline(char *ptr)
-{
-	int	i;
-
-	i = 0;
-	while (ptr[i])
-	{
-		if ((ptr[i] == '\n' && ptr[i+1] == '\n') || ptr[0] == '\n')
-		{
-			printf("You have a duplicate newline");
-			exit(0);	
+			if (map[i][j] == '1')
+				data.img = mlx_xpm_file_to_image(data.mlx, "./utils/wall.xpm", &k, &k);
+			else
+				data.img = mlx_xpm_file_to_image(data.mlx, "./utils/empty_space_2.xpm", &k, &k);
+			mlx_put_image_to_window(data.mlx, data.mlx_win, data.img, j * 50, i * 50);
+			j++;
 		}
 		i++;
 	}
-	return (1);
+	mlx_loop(data.mlx);
 }
 
-void	check_len(char *ptr)
+void	get_map(char *file_name, t_list **lst)
 {
-	int	i;
-	int	j;
-	int	len;
+	int		fd;
+	char	*s;
 
-	len = 0;
-	i = 0;
-	j = 0;
-	while (ptr[len] && ptr[len] != '\n')
-		len++;
-	while (ptr[i])
+	check_file_format(file_name);
+	fd = open(file_name, O_RDONLY);
+	while (1337)
 	{
-		if (ptr[i] == '\n' && j == len)
-		{
-			j = 0;
-			i++;
-		}
-		else if (ptr[i] == '\n' && (j < len || j > len))
-		{
-			printf("The length of the lines is different");
-			exit(0);
-		}			
-		i++;
-		j++;
+		s = get_next_line(fd);
+		if (!s)
+			break ;
+		ft_lstadd_back(lst, ft_lstnew(s));
 	}
-}
-
-void	check_map(char *ptr)
-{
-	check_char(ptr);
-	check_newline(ptr);
-	check_len(ptr);
 }
 
 int	main(int argc, char **argv)
 {
-	char	*s;
-	t_list 	*map;
-	int 	fd;
+	t_list	*lst;
+	t_list	*tmp;
+	char	**map;
+	int		i;
 
+	lst = NULL;
 	if (argc < 2)
 		return (0);
-	fd = open(argv[1], O_RDONLY);
-	map = NULL;
-	while (s)
+	get_map(argv[1], &lst);
+	tmp = lst;
+	map = malloc((ft_lstsize(lst) + 1) * sizeof(char *));
+	if (!map)
+		return (0);
+	i = 0;
+	while (tmp)
 	{
-		s = get_next_line(fd);
-		ft_lstadd_back(ft_lstnew(s), );
-		
+		map[i] = ft_strtrim(tmp->content, "\n");
+		printf("%s\n", map[i]);
+		tmp = tmp->next;
+		i++;
 	}
-
-	// check_map(ptr);
-    // printf("%s",ptr);
+	map[i] = NULL;
+	check_map(map, ft_lstsize(lst), (ft_lstlast(lst))->content);
+	graphic(map, i, ft_strlen(map[0]));
+	// system("leaks so_long");
 }

@@ -1,25 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 07:26:28 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/12 22:14:13 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/22 09:54:18 by mmoumani          #+#    #+#             */
+/*   Updated: 2023/01/13 22:50:46 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-t_list	*ft_lstnew(char *content)
+char	*ft_substr(char const *s, unsigned	int start, size_t len)
 {
-	t_list	*node;
+	char	*sub;
+	size_t	i;
+	size_t	slen;
 
-	node = malloc(sizeof(t_list));
-	if (!node)
+	i = 0;
+	if (!s)
 		return (NULL);
-	node->content = content;
-	node->next = NULL;
-	return (node);
+	if (start >= ft_strlen(s))
+		start = ft_strlen(s);
+	slen = ft_strlen(s + start);
+	if (slen < len)
+		sub = malloc(slen + 1);
+	else
+		sub = malloc(len + 1);
+	if (!sub)
+		return (NULL);
+	while (s[start + i] && (i < len))
+	{
+		sub[i] = s[start + i];
+		i++;
+	}
+	sub[i] = '\0';
+	return (sub);
 }

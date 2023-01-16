@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 07:26:28 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/12 22:14:13 by mmoumani         ###   ########.fr       */
+/*   Created: 2022/10/07 13:30:46 by mmoumani          #+#    #+#             */
+/*   Updated: 2023/01/13 23:52:10 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-t_list	*ft_lstnew(char *content)
+char	*ft_strrchr(const char *s, int c)
 {
-	t_list	*node;
+	int		i;
+	int		j;
+	char	m;
+	size_t	len;
 
-	node = malloc(sizeof(t_list));
-	if (!node)
-		return (NULL);
-	node->content = content;
-	node->next = NULL;
-	return (node);
+	i = 0;
+	j = -1;
+	m = c;
+	len = ft_strlen(s);
+	if (m == s[len])
+		return ((char *)&s[len]);
+	while (s[i])
+	{
+		if (s[i] == m)
+			j = i;
+		if (s[i + 1] == '\0' && j != -1)
+			return ((char *)&s[j]);
+		i++;
+	}
+	return (NULL);
 }

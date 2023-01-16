@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:42:10 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/12 22:12:41 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/16 02:53:47 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,24 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+// struct help
+
+typedef struct s_map
+{
+	int	player;
+	int	collectible;
+	int	exit;
+}	t_map;
+
+typedef struct s_data
+{
+	void	*mlx;
+	void	*img;
+	void	*mlx_win;
+}	t_data;
+
+
+
 // linked list :
 
 typedef struct s_list
@@ -26,10 +44,23 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-t_list	*ft_lstnew(int content);
+t_list	*ft_lstnew(char *content);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstlast(t_list *lst);
 int		ft_lstsize(t_list *lst);
 
+// libft function
+char	*ft_strchr(const char *s, int c);
+char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_substr(char const *s, unsigned	int start, size_t len);
+size_t	ft_strlen(const char *str);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+char	*ft_strrchr(const char *s, int c);
+
+// checker function
+void	ft_error(char *error_msg);
+void	check_map(char **map, int len, char *last_line);
+void	check_char(char **map, int len);
+void	check_file_format(char *file_name);
 
 #endif
