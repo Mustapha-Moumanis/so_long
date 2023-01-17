@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:42:10 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/16 02:53:47 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/17 01:24:04 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,26 @@
 
 // struct help
 
-typedef struct s_map
-{
-	int	player;
-	int	collectible;
-	int	exit;
-}	t_map;
+// typedef struct s_map
+// {
+// 	int	player;
+// 	int	collectible;
+// 	int	exit;
+// }	t_map;
 
 typedef struct s_data
 {
 	void	*mlx;
 	void	*img;
 	void	*mlx_win;
+	int		player;
+	int		collectible;
+	int		exit;
+	int		x_p;
+	int		y_p;
+	int		x_e;
+	int		y_e;
 }	t_data;
-
-
 
 // linked list :
 
@@ -56,11 +61,15 @@ char	*ft_substr(char const *s, unsigned	int start, size_t len);
 size_t	ft_strlen(const char *str);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strrchr(const char *s, int c);
+int		ft_strcmp(char *s1, char *s2);
 
 // checker function
 void	ft_error(char *error_msg);
-void	check_map(char **map, int len, char *last_line);
-void	check_char(char **map, int len);
+void	check_map(char **map, int len, char *last_line, t_data *data);
+void	check_char(char **map, int len, t_data *data);
 void	check_file_format(char *file_name);
+void	check_len(char **ptr);
+void	check_newline(char **ptr, char *last_line);
+int		is_valid_ext(char *file_name, char *ext);
 
 #endif
