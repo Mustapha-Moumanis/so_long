@@ -2,7 +2,7 @@ NAME = so_long
 
 FILES = so_long.c ft_lstnew.c ft_lstadd_back.c ft_lstlast.c ft_lstsize.c ft_strnstr.c\
 		ft_substr.c ft_strtrim.c get_next_line.c get_next_line_utils.c ft_strrchr.c \
-		check_map.c check_file_format.c function_utils.c
+		check_map.c check_file_format.c function_utils.c move.c ft_itoa.c
 
 FILES := $(addprefix src/, $(FILES))
 

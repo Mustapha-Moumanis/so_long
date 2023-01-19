@@ -6,55 +6,80 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:26:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/17 01:42:27 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/19 02:23:27 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 #include "get_next_line.h"
-#include <mlx.h>
 
-void	images(char c, t_data *data)
-{
-	int		k;
-
-	if (c == '1')
-	data->img = mlx_xpm_file_to_image(data->mlx, "./utils/wall_75.xpm", &k, &k);
-	if (c == '0')
-	data->img = mlx_xpm_file_to_image(data->mlx, "./utils/empty.xpm", &k, &k);
-	if (c == 'C')
-	data->img = mlx_xpm_file_to_image(data->mlx, "./utils/eat.xpm", &k, &k);
-	if (c == 'E')
-	data->img = mlx_xpm_file_to_image(data->mlx, "./utils/o_door.xpm", &k, &k);
-	if (c == 'P')
-	data->img = mlx_xpm_file_to_image(data->mlx, "./utils/sumo.xpm", &k, &k);
-}
-
-void	graphic(char **map, int col_len, int row_len, t_data *data)
+void	images(t_data *data)
 {
 	int		i;
 	int		j;
-	int		x;
-	int		y;
+	int		k;
 
-	row_len *= 75;
-	col_len *= 75;
-	data->mlx = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx, row_len, col_len, "so_long");
+	j = 0;
 	i = 0;
-	while (map[i])
+	while (data->map[i])
 	{
 		j = 0;
-		while (map[i][j])
+		while (data->map[i][j])
 		{
-			x = i * 75;
-			y = j * 75;
-			images(map[i][j], data);
-			mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, y, x);
+			data->x = i * 75;
+			data->y = j * 75;
+			if (data->map[i][j] == '1')
+				data->img = mlx_xpm_file_to_image(data->mlx, "./utils/wall_75.xpm", &k, &k);
+			else if (data->map[i][j] == '0')
+				data->img = mlx_xpm_file_to_image(data->mlx, "./utils/empty.xpm", &k, &k);
+			else if (data->map[i][j] == 'C')
+				data->img = mlx_xpm_file_to_image(data->mlx, "./utils/eat.xpm", &k, &k);
+			else if (data->map[i][j] == 'E')
+				data->img = mlx_xpm_file_to_image(data->mlx, "./utils/o_door.xpm", &k, &k);
+			else if (data->map[i][j] == 'P')
+				data->img = mlx_xpm_file_to_image(data->mlx, "./utils/sumo.xpm", &k, &k);
+			mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, data->y, data->x);
 			j++;
 		}
 		i++;
 	}
+}
+
+int	key_hook(int keycode, t_data *data)
+{
+	// printf("collectible : %d\n", data->collectible);
+	char *c;
+	if (keycode == 126 || keycode == 13)
+		move_up(data);
+	else if (keycode == 125 || keycode == 1)
+		move_down(data);
+	else if (keycode == 123 || keycode == 0)
+		move_left(data);
+	else if (keycode == 124 || keycode == 2)
+		move_right(data);
+	else if (keycode == 53)
+		ft_close();
+	data->n_m++;
+	c = ft_itoa(data->n_m);
+	images(data);
+	mlx_string_put(data->mlx, data->mlx_win, 37, 37, 0xFF0000, c);
+	free(c);
+	return (1);
+}
+
+void	graphic(int col_len, int row_len, t_data *data)
+{
+	data->col_len = col_len;
+	data->row_len = row_len;
+	row_len *= 75;
+	col_len *= 75;
+	data->mlx = mlx_init();
+	data->mlx_win = mlx_new_window(data->mlx, row_len, col_len, "so_long");
+	images(data);
+	mlx_string_put(data->mlx, data->mlx_win, 35, 35, 0xFF0000, "0");
+	// mlx_key_hook(data->mlx_win, key_hook, data);
+	mlx_hook(data->mlx_win, 2, 0, key_hook, data);
+	mlx_hook(data->mlx_win, 17, 0, ft_close, data);
 	mlx_loop(data->mlx);
 }
 
@@ -78,7 +103,6 @@ int	main(int argc, char **argv)
 {
 	t_list	*lst;
 	t_list	*tmp;
-	char	**map;
 	t_data	data;
 	int		i;
 
@@ -90,19 +114,19 @@ int	main(int argc, char **argv)
 	tmp = lst;
 	if (!lst)
 		return (0);
-	map = malloc((ft_lstsize(lst) + 1) * sizeof(char *));
-	if (!map)
+	data.map = malloc((ft_lstsize(lst) + 1) * sizeof(char *));
+	if (!data.map)
 		return (0);
 	i = 0;
 	while (tmp)
 	{
-		map[i] = ft_strtrim(tmp->content, "\n");
-		printf("%s\n", map[i]);
+		data.map[i] = ft_strtrim(tmp->content, "\n");
+		printf("%s\n", data.map[i]);
 		tmp = tmp->next;
 		i++;
 	}
-	map[i] = NULL;
-	check_map(map, ft_lstsize(lst), (ft_lstlast(lst))->content, &data);
+	data.map[i] = NULL;
+	check_map(data.map, ft_lstsize(lst), (ft_lstlast(lst))->content, &data);
 	// system("leaks so_long");
-	graphic(map, i, ft_strlen(map[0]), &data);
+	graphic(i, ft_strlen(data.map[0]), &data);
 }

@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:42:10 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/17 01:24:04 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/19 02:20:38 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <mlx.h>
 
-// struct help
-
-// typedef struct s_map
-// {
-// 	int	player;
-// 	int	collectible;
-// 	int	exit;
-// }	t_map;
+// struct help :
 
 typedef struct s_data
 {
+	char	**map;
 	void	*mlx;
 	void	*img;
 	void	*mlx_win;
@@ -37,8 +32,11 @@ typedef struct s_data
 	int		exit;
 	int		x_p;
 	int		y_p;
-	int		x_e;
-	int		y_e;
+	int		n_m;
+	int		x;
+	int		y;
+	int		col_len;
+	int		row_len;
 }	t_data;
 
 // linked list :
@@ -62,14 +60,24 @@ size_t	ft_strlen(const char *str);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strrchr(const char *s, int c);
 int		ft_strcmp(char *s1, char *s2);
+char	*ft_itoa(int n);
 
 // checker function
 void	ft_error(char *error_msg);
+int		ft_close(void);
+int		ft_winner(void);
 void	check_map(char **map, int len, char *last_line, t_data *data);
-void	check_char(char **map, int len, t_data *data);
+void	check_char(int len, t_data *data);
 void	check_file_format(char *file_name);
 void	check_len(char **ptr);
 void	check_newline(char **ptr, char *last_line);
 int		is_valid_ext(char *file_name, char *ext);
+
+// move function
+void	move_up(t_data *data);
+void	move_down(t_data *data);
+void	move_left(t_data *data);
+void	move_right(t_data *data);
+
 
 #endif

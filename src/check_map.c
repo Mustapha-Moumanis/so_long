@@ -6,13 +6,13 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:58:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/17 01:24:11 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/19 01:56:42 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	check_char(char **map, int len, t_data *data)
+void	check_char(int len, t_data *data)
 {
 	int		i;
 	int		j;
@@ -23,15 +23,10 @@ void	check_char(char **map, int len, t_data *data)
 	while (i < len)
 	{
 		j = 0;
-		while (map[i][j])
+		while (data->map[i][j])
 		{
-			if (!ft_strchr(set, map[i][j]))
+			if (!ft_strchr(set, data->map[i][j]))
 				ft_error("Use the valid characters (0, 1, P, C, E)");
-			if (map[i][j] == 'E')
-			{
-				data->x_e = i;
-				data->y_e = j;
-			}
 			j++;
 		}
 		i++;
@@ -98,7 +93,7 @@ void	check_wall(char **ptr, int col_len, int row_len, t_data *data)
 
 void	check_map(char **map, int len, char *last_line, t_data *data)
 {
-	check_char(map, len, data);
+	check_char(len, data);
 	check_newline(map, last_line);
 	check_len(map);
 	check_wall(map, ft_strlen(map[0]), len, data);
