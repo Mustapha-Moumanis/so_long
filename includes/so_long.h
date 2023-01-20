@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:42:10 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/19 02:20:38 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/20 16:37:30 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*ft_itoa(int n);
 void	ft_error(char *error_msg);
 int		ft_close(void);
 int		ft_winner(void);
-void	check_map(char **map, int len, char *last_line, t_data *data);
+void	check_map(int row_len, char *last_line, t_data *data);
 void	check_char(int len, t_data *data);
 void	check_file_format(char *file_name);
 void	check_len(char **ptr);
@@ -78,6 +78,7 @@ void	move_up(t_data *data);
 void	move_down(t_data *data);
 void	move_left(t_data *data);
 void	move_right(t_data *data);
+void	get_img(t_data *data, int i, int j);
 
 
 #endif

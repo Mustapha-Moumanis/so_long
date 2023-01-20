@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:58:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/19 01:56:42 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/20 14:23:55 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,26 @@ void	check_wall(char **ptr, int col_len, int row_len, t_data *data)
 	}
 }
 
-void	check_map(char **map, int len, char *last_line, t_data *data)
+void	check_path(char **copy_map, t_data *data, int col_len, int row_len)
 {
-	check_char(len, data);
-	check_newline(map, last_line);
-	check_len(map);
-	check_wall(map, ft_strlen(map[0]), len, data);
-	check_duplicate(map, data);
+	(void)col_len;
+	(void)row_len;
+	(void)data;
+	copy_map[0][0] = '1';
+	printf("%c\n", copy_map[0][0]);
+}
+
+void	check_map(int row_len, char *last_line, t_data *data)
+{
+	int	col_len;
+
+	char *copy_map;
+	copy_map = *data->map;
+	col_len = ft_strlen(data->map[0]);
+	check_char(row_len, data);
+	check_newline(data->map, last_line);
+	check_len(data->map);
+	check_wall(data->map, col_len, row_len, data);
+	check_duplicate(data->map, data);
+	check_path(&copy_map, data, col_len, row_len);
 }
