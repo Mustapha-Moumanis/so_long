@@ -6,12 +6,30 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:26:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/20 23:13:44 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/23 22:03:50 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 #include "get_next_line.h"
+
+void wall_img(t_data *data, int i, int j, int c, int r)
+{
+	int		k;
+
+	if (i == 0 && j == 0)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/l_t.xpm", &k, &k);
+	else if (i == c && j == r)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/r_b.xpm", &k, &k);
+	else if (i == c && j == 0)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/l_b.xpm", &k, &k);
+	else if (i == 0 && j == r)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/r_t.xpm", &k, &k);
+	else if ((i == 0 && j != 0) || (i == c && j != r))
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/t_b.xpm", &k, &k);
+	else
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/l_r.xpm", &k, &k);
+}
 
 void	get_img(t_data *data, int i, int j)
 {
@@ -33,15 +51,8 @@ void	get_img(t_data *data, int i, int j)
 		data->img = mlx_xpm_file_to_image(data->mlx, "utils/door.xpm", &k, &k);
 	else if (data->map[i][j] == '1' && i != 0 && j != 0 && i != c && j != r)
 		data->img = mlx_xpm_file_to_image(data->mlx, "utils/wall_3.xpm", &k, &k);
-	else if ((i == 0 && j != 0) || (i == c && j != r))
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/top_buttom.xpm", &k, &k);
-	else if (i == 0 && j == 0)
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/right_top.xpm", &k, &k);
-	else if (i == 0 && j == r)
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/top_buttom.xpm", &k, &k);
 	else
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/top.xpm", &k, &k);
-	printf("%d\n", data->row_len);
+		wall_img(data, i, j, c, r);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, data->y, data->x);
 }
 
@@ -67,6 +78,7 @@ void	images(t_data *data)
 int	key_hook(int keycode, t_data *data)
 {
 	char *c;
+
 	if (keycode == 126 || keycode == 13)
 		move_up(data);
 	else if (keycode == 125 || keycode == 1)
@@ -80,6 +92,7 @@ int	key_hook(int keycode, t_data *data)
 	c = ft_itoa(data->n_m);
 	get_img(data, 0, 0);
 	mlx_string_put(data->mlx, data->mlx_win, 25, 25, 0x00FFFF, c);
+	free(c);
 	return (1);
 }
 
@@ -126,12 +139,12 @@ int	main(int argc, char **argv)
 		return (0);
 	data = (t_data){0};
 	get_map(argv[1], &lst);
-	tmp = lst;
 	if (!lst)
 		return (0);
 	data.map = malloc((ft_lstsize(lst) + 1) * sizeof(char *));
 	if (!data.map)
 		return (0);
+	tmp = lst;
 	i = 0;
 	while (tmp)
 	{
