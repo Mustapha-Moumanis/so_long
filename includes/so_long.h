@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:42:10 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/20 21:06:49 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/24 06:33:02 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_data
 	int		y;
 	int		col_len;
 	int		row_len;
+	int		c_animation;
 }	t_data;
 
 // linked list :
@@ -79,6 +80,7 @@ void	move_down(t_data *data);
 void	move_left(t_data *data);
 void	move_right(t_data *data);
 void	get_img(t_data *data, int i, int j);
+void	player_img(t_data *data, int d);
 
 
 #endif

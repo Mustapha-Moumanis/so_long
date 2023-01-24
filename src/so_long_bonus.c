@@ -1,17 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   so_long_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/11 13:26:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/24 06:18:01 by mmoumani         ###   ########.fr       */
+/*   Created: 2023/01/23 22:15:24 by mmoumani          #+#    #+#             */
+/*   Updated: 2023/01/24 07:02:53 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 #include "get_next_line.h"
+
+void	player_img(t_data *data, int d)
+{
+	int		k;
+	int		i;
+	int		j;
+
+	i = data->x_p * 75;
+	j = data->y_p * 75;
+	// {"utils/p/p_t.xpm", "utils/p/p_t.xpm", "utils/p/p_t.xpm", "utils/p/p_r.xpm"};
+	// printf("///%s\n", p_d[d]);
+	if (d == 0)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/p/p_u.xpm", &k, &k);
+	else if (d == 1)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/p/p_d.xpm", &k, &k);
+	else if (d == 2)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/p/p_l.xpm", &k, &k);
+	else if (d == 3)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/p/p_r.xpm", &k, &k);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, j, i);
+}
+
 
 void wall_img(t_data *data, int i, int j, int c, int r)
 {
@@ -42,7 +64,7 @@ void	get_img(t_data *data, int i, int j)
 	data->x = i * 75;
 	data->y = j * 75;
 	if (data->map[i][j] == 'P')
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/sumo.xpm", &k, &k);
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/p/0.xpm", &k, &k);
 	else if (data->map[i][j] == '0')
 		data->img = mlx_xpm_file_to_image(data->mlx, "utils/newmap.xpm", &k, &k);
 	else if (data->map[i][j] == 'C')
@@ -75,8 +97,56 @@ void	images(t_data *data)
 	}
 }
 
+void c_animation(t_data *data, int i, int j)
+{
+	int k;
+	int	c;
+
+	c = data->c_animation;
+	if (c == 0)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/c/c1.xpm", &k, &k);
+	else if (c == 1500)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/c/c2.xpm", &k, &k);
+	else if (c == 3000)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/c/c3.xpm", &k, &k);
+	else if (c == 4500)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/c/c4.xpm", &k, &k);
+	else if (c == 6000)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/c/c5.xpm", &k, &k);
+	else if (c == 7500)
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/c/c6.xpm", &k, &k);
+	if (c == 0 || c == 1500 || c == 3000 || c == 4500 || c == 6000 || c == 7500)
+		mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, j, i);
+	if (c > 7500)
+		data->c_animation = 0;
+}
+
+int	animation(t_data *data)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+
+	while (data->map[i])
+	{
+		j = 0;
+		while (data->map[i][j])
+		{
+			if (data->map[i][j] == 'C')
+				c_animation(data, i * 75, j * 75);
+			j++;
+		}
+		i++;
+	}
+	data->c_animation++;
+	return (0);
+}
+
 int	key_hook(int keycode, t_data *data)
 {
+	char *c;
+
 	if (keycode == 126 || keycode == 13)
 		move_up(data);
 	else if (keycode == 125 || keycode == 1)
@@ -87,6 +157,10 @@ int	key_hook(int keycode, t_data *data)
 		move_right(data);
 	else if (keycode == 53)
 		ft_close();
+	c = ft_itoa(data->n_m);
+	get_img(data, 0, 0);
+	mlx_string_put(data->mlx, data->mlx_win, 25, 25, 0x00FFFF, c);
+	free(c);
 	return (1);
 }
 
@@ -99,8 +173,10 @@ void	graphic(int col_len, int row_len, t_data *data)
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, row_len, col_len, "so_long");
 	images(data);
+	mlx_string_put(data->mlx, data->mlx_win, 25, 25, 0x00FFFF, "0");
 	mlx_hook(data->mlx_win, 2, 0, key_hook, data);
 	mlx_hook(data->mlx_win, 17, 0, ft_close, data);
+	mlx_loop_hook(data->mlx, animation, data);
 	mlx_loop(data->mlx);
 }
 

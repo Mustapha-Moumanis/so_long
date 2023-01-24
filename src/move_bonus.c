@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move.c                                             :+:      :+:    :+:   */
+/*   move_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 23:38:33 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/24 06:18:38 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/24 07:03:39 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	move_up(t_data *data)
 {
 	char	c;
-	char	*move;
 
 	c = data->map[data->x_p - 1][data->y_p];
 	if (c != '1' && c != 'E')
@@ -26,13 +25,9 @@ void	move_up(t_data *data)
 		get_img(data, data->x_p, data->y_p);
 		data->x_p--;
 		data->map[data->x_p][data->y_p] = 'P';
-		get_img(data, data->x_p, data->y_p);
+		// get_img(data, data->x_p, data->y_p);
+		player_img(data, 0);
 		data->n_m++;
-		move = ft_itoa(data->n_m);
-		write(1, "Move : ", 8);
-		write(1, move, ft_strlen(move));
-		write(1, "\n", 1);
-		free(move);
 	}
 	if (c == 'E' && data->collectible == 0)
 		ft_winner();
@@ -40,7 +35,6 @@ void	move_up(t_data *data)
 void	move_down(t_data *data)
 {
 	char c;
-	char	*move;
 
 	c = data->map[data->x_p + 1][data->y_p];
 	if (c != '1' && c != 'E')
@@ -51,21 +45,16 @@ void	move_down(t_data *data)
 		get_img(data, data->x_p, data->y_p);
 		data->x_p++;
 		data->map[data->x_p][data->y_p] = 'P';
-		get_img(data, data->x_p, data->y_p);
+		// get_img(data, data->x_p, data->y_p);
+		player_img(data, 1);
 		data->n_m++;
-		move = ft_itoa(data->n_m);
-		write(1, "Move : ", 8);
-		write(1, move, ft_strlen(move));
-		write(1, "\n", 1);
-		free(move);
 	}
 	if (c == 'E' && data->collectible == 0)
 		ft_winner();
 }
 void	move_left(t_data *data)
 {
-	char	c;
-	char	*move;
+	char c;
 
 	c = data->map[data->x_p][data->y_p - 1];
 	if (c != '1' && c != 'E')
@@ -76,13 +65,10 @@ void	move_left(t_data *data)
 		get_img(data, data->x_p, data->y_p);
 		data->y_p--;
 		data->map[data->x_p][data->y_p] = 'P';
-		get_img(data, data->x_p, data->y_p);
+		// get_img(data, data->x_p, data->y_p);
+		player_img(data, 2);
+
 		data->n_m++;
-		move = ft_itoa(data->n_m);
-		write(1, "Move : ", 8);
-		write(1, move, ft_strlen(move));
-		write(1, "\n", 1);
-		free(move);
 	}
 	if (c == 'E' && data->collectible == 0)
 		ft_winner();
@@ -90,7 +76,6 @@ void	move_left(t_data *data)
 void	move_right(t_data *data)
 {
 	char c;
-	char	*move;
 
 	c = data->map[data->x_p][data->y_p + 1];
 	if (c != '1' && c != 'E')
@@ -101,13 +86,9 @@ void	move_right(t_data *data)
 		get_img(data, data->x_p, data->y_p);
 		data->y_p++;
 		data->map[data->x_p][data->y_p] = 'P';
-		get_img(data, data->x_p, data->y_p);
+		player_img(data, 3);
+		// get_img(data, data->x_p, data->y_p);
 		data->n_m++;
-		move = ft_itoa(data->n_m);
-		write(1, "Move : ", 8);
-		write(1, move, ft_strlen(move));
-		write(1, "\n", 1);
-		free(move);
 	}
 	if (c == 'E' && data->collectible == 0)
 		ft_winner();
