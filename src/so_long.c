@@ -6,30 +6,12 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:26:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/24 06:18:01 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/24 22:56:09 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 #include "get_next_line.h"
-
-void wall_img(t_data *data, int i, int j, int c, int r)
-{
-	int		k;
-
-	if (i == 0 && j == 0)
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/l_t.xpm", &k, &k);
-	else if (i == c && j == r)
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/r_b.xpm", &k, &k);
-	else if (i == c && j == 0)
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/l_b.xpm", &k, &k);
-	else if (i == 0 && j == r)
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/r_t.xpm", &k, &k);
-	else if ((i == 0 && j != 0) || (i == c && j != r))
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/t_b.xpm", &k, &k);
-	else
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/l_r.xpm", &k, &k);
-}
 
 void	get_img(t_data *data, int i, int j)
 {
@@ -42,17 +24,15 @@ void	get_img(t_data *data, int i, int j)
 	data->x = i * 75;
 	data->y = j * 75;
 	if (data->map[i][j] == 'P')
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/sumo.xpm", &k, &k);
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/p/p_u.xpm", &k, &k);
 	else if (data->map[i][j] == '0')
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/newmap.xpm", &k, &k);
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/img/s_0.xpm", &k, &k);
 	else if (data->map[i][j] == 'C')
 		data->img = mlx_xpm_file_to_image(data->mlx, "utils/c/c1.xpm", &k, &k);
 	else if (data->map[i][j] == 'E')
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/d_c.xpm", &k, &k);
-	else if (data->map[i][j] == '1' && i != 0 && j != 0 && i != c && j != r)
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/wall_3.xpm", &k, &k);
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/img/s_d.xpm", &k, &k);
 	else
-		wall_img(data, i, j, c, r);
+		data->img = mlx_xpm_file_to_image(data->mlx, "utils/img/s_w.xpm", &k, &k);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, data->y, data->x);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 23:38:33 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/24 07:03:39 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/24 20:49:32 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	move_up(t_data *data)
 	c = data->map[data->x_p - 1][data->y_p];
 	if (c != '1' && c != 'E')
 	{
-		if (c == 'C')
+		if (c == 'C' && c > 0)
 			data->collectible--;
 		data->map[data->x_p][data->y_p] = '0';
 		get_img(data, data->x_p, data->y_p);
@@ -39,7 +39,7 @@ void	move_down(t_data *data)
 	c = data->map[data->x_p + 1][data->y_p];
 	if (c != '1' && c != 'E')
 	{
-		if (c == 'C')
+		if (c == 'C' && c > 0)
 			data->collectible--;
 		data->map[data->x_p][data->y_p] = '0';
 		get_img(data, data->x_p, data->y_p);
@@ -59,7 +59,7 @@ void	move_left(t_data *data)
 	c = data->map[data->x_p][data->y_p - 1];
 	if (c != '1' && c != 'E')
 	{
-		if (c == 'C')
+		if (c == 'C' && c > 0)
 			data->collectible--;
 		data->map[data->x_p][data->y_p] = '0';
 		get_img(data, data->x_p, data->y_p);
@@ -80,7 +80,7 @@ void	move_right(t_data *data)
 	c = data->map[data->x_p][data->y_p + 1];
 	if (c != '1' && c != 'E')
 	{
-		if (c == 'C')
+		if (c == 'C' && c > 0)
 			data->collectible--;
 		data->map[data->x_p][data->y_p] = '0';
 		get_img(data, data->x_p, data->y_p);

@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:42:10 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/24 06:33:02 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/24 20:51:35 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct s_data
 	int		exit;
 	int		x_p;
 	int		y_p;
+	int		x_e;
+	int		y_e;
 	int		n_m;
 	int		x;
 	int		y;

@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 22:15:24 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/24 07:02:53 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/24 22:56:09 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	player_img(t_data *data, int d)
 
 	i = data->x_p * 75;
 	j = data->y_p * 75;
-	// {"utils/p/p_t.xpm", "utils/p/p_t.xpm", "utils/p/p_t.xpm", "utils/p/p_r.xpm"};
-	// printf("///%s\n", p_d[d]);
 	if (d == 0)
 		data->img = mlx_xpm_file_to_image(data->mlx, "utils/p/p_u.xpm", &k, &k);
 	else if (d == 1)
@@ -35,47 +33,29 @@ void	player_img(t_data *data, int d)
 }
 
 
-void wall_img(t_data *data, int i, int j, int c, int r)
-{
-	int		k;
-
-	if (i == 0 && j == 0)
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/l_t.xpm", &k, &k);
-	else if (i == c && j == r)
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/r_b.xpm", &k, &k);
-	else if (i == c && j == 0)
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/l_b.xpm", &k, &k);
-	else if (i == 0 && j == r)
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/r_t.xpm", &k, &k);
-	else if ((i == 0 && j != 0) || (i == c && j != r))
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/t_b.xpm", &k, &k);
-	else
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/l_r.xpm", &k, &k);
-}
-
-void	get_img(t_data *data, int i, int j)
+void	get_img(t_data *d, int i, int j)
 {
 	int		k;
 	int		c;
 	int		r;
 
-	c = data->col_len - 1;
-	r = data->row_len - 1;
-	data->x = i * 75;
-	data->y = j * 75;
-	if (data->map[i][j] == 'P')
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/p/0.xpm", &k, &k);
-	else if (data->map[i][j] == '0')
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/newmap.xpm", &k, &k);
-	else if (data->map[i][j] == 'C')
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/c/c1.xpm", &k, &k);
-	else if (data->map[i][j] == 'E')
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/d_c.xpm", &k, &k);
-	else if (data->map[i][j] == '1' && i != 0 && j != 0 && i != c && j != r)
-		data->img = mlx_xpm_file_to_image(data->mlx, "utils/wall_3.xpm", &k, &k);
+	c = d->col_len - 1;
+	r = d->row_len - 1;
+	d->x = i * 75;
+	d->y = j * 75;
+	if (d->map[i][j] == 'P')
+		d->img = mlx_xpm_file_to_image(d->mlx, "utils/p/p_u.xpm", &k, &k);
+	else if (d->map[i][j] == '0')
+		d->img = mlx_xpm_file_to_image(d->mlx, "utils/img/s_0.xpm", &k, &k);
+	else if (d->map[i][j] == 'C')
+		d->img = mlx_xpm_file_to_image(d->mlx, "utils/c/c1.xpm", &k, &k);
+	else if (d->map[i][j] == 'E' && d->collectible != 0)
+		d->img = mlx_xpm_file_to_image(d->mlx, "utils/img/d_c.xpm", &k, &k);
+	else if (d->map[i][j] == 'E' && d->collectible == 0)
+		d->img = mlx_xpm_file_to_image(d->mlx, "utils/img/s_d.xpm", &k, &k);
 	else
-		wall_img(data, i, j, c, r);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, data->y, data->x);
+		d->img = mlx_xpm_file_to_image(d->mlx, "utils/img/s_w.xpm", &k, &k);
+	mlx_put_image_to_window(d->mlx, d->mlx_win, d->img, d->y, d->x);
 }
 
 void	images(t_data *data)
@@ -143,23 +123,24 @@ int	animation(t_data *data)
 	return (0);
 }
 
-int	key_hook(int keycode, t_data *data)
+int	key_hook(int keycode, t_data *d)
 {
-	char *c;
+	char	*c;
 
 	if (keycode == 126 || keycode == 13)
-		move_up(data);
+		move_up(d);
 	else if (keycode == 125 || keycode == 1)
-		move_down(data);
+		move_down(d);
 	else if (keycode == 123 || keycode == 0)
-		move_left(data);
+		move_left(d);
 	else if (keycode == 124 || keycode == 2)
-		move_right(data);
+		move_right(d);
 	else if (keycode == 53)
 		ft_close();
-	c = ft_itoa(data->n_m);
-	get_img(data, 0, 0);
-	mlx_string_put(data->mlx, data->mlx_win, 25, 25, 0x00FFFF, c);
+	get_img(d, d->x_e, d->y_e);
+	c = ft_itoa(d->n_m);
+	get_img(d, 0, 0);
+	mlx_string_put(d->mlx, d->mlx_win, 25, 25, 0x00FFFF, c);
 	free(c);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 22:15:34 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/23 22:16:47 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/24 21:22:23 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ void	check_wall(char **ptr, int col_len, int row_len, t_data *data)
 	int	j;
 
 	i = 0;
-	data->x_p = 0;
-	data->y_p = 0;
 	while (ptr[i])
 	{
 		j = 0;
@@ -84,6 +82,11 @@ void	check_wall(char **ptr, int col_len, int row_len, t_data *data)
 				{
 					data->x_p = i;
 					data->y_p = j;
+				}
+				if (ptr[i][j] == 'E')
+				{
+					data->x_e = i;
+					data->y_e = j;
 				}
 			}
 			j++;
