@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 22:15:24 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/25 00:21:32 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/25 05:13:30 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	get_img(t_data *d, int i, int j)
 		d->img = mlx_xpm_file_to_image(d->mlx, "utils/img/s_d.xpm", &k, &k);
 	else
 		d->img = mlx_xpm_file_to_image(d->mlx, "utils/img/s_w.xpm", &k, &k);
+	if (!d->img)
+		ft_error("\033[0;31myou have a problem in xpm img\n");
 	mlx_put_image_to_window(d->mlx, d->mlx_win, d->img, d->y, d->x);
 }
 

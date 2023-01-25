@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 18:58:18 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/25 01:57:19 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/25 05:13:30 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	check_char(int len, t_data *data)
 		while (data->map[i][j])
 		{
 			if (!ft_strchr(set, data->map[i][j]))
-				ft_error("Use the valid characters (0, 1, P, C, E)");
+				ft_error("\033[0;31mUse the valid characters (0, 1, P, C, E)\n");
 			if (data->map[i][j] == 'E')
 			{
 				data->x_e = i;
@@ -60,11 +60,11 @@ void	check_duplicate(char **ptr, t_data *data)
 		i++;
 	}
 	if (data->player != 1)
-		ft_error("The map must contain 1 player");
+		ft_error("\033[0;31mThe map must contain 1 player\n");
 	if (data->exit != 1)
-		ft_error("The map must contain 1 exit");
+		ft_error("\033[0;31mThe map must contain 1 exit\n");
 	if (data->collectible < 1)
-		ft_error("The map must contain least 1 collectible");
+		ft_error("\033[0;31mThe map must contain least 1 collectible\n");
 }
 
 void	check_wall(char **ptr, int col_len, int row_len, t_data *data)
@@ -81,7 +81,7 @@ void	check_wall(char **ptr, int col_len, int row_len, t_data *data)
 			if (ptr[i][j] != '1')
 			{
 				if (i == 0 || j == 0 || j == col_len - 1 || i == row_len - 1)
-					ft_error("You have a problem in the wall");
+					ft_error("\033[0;31mYou have a problem in the wall\n");
 				if (ptr[i][j] == 'P')
 				{
 					data->x_p = i;

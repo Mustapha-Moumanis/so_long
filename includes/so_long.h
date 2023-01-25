@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:42:10 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/25 00:43:20 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/25 04:06:33 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	check_file_format(char *file_name);
 void	check_len(char **ptr);
 void	check_newline(char **ptr, char *last_line);
 int		is_valid_ext(char *file_name, char *ext);
-void	check_way(char **copy_map, int i, int j);
+void	check_collectible(char **copy_map, int i, int j);
 void	flood_fill(char **copy_map, int i, int j, int r);
 void	check_path(t_data *data, int r);
 

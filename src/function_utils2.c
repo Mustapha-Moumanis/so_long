@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 00:14:27 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/25 00:29:10 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/25 05:13:30 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	player_img(t_data *data, int d)
 		data->img = mlx_xpm_file_to_image(data->mlx, "utils/p/p_l.xpm", &k, &k);
 	else if (d == 3)
 		data->img = mlx_xpm_file_to_image(data->mlx, "utils/p/p_r.xpm", &k, &k);
+	if (!data->img)
+		ft_error("\033[0;31myou have a problem in xpm img\n");
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, j, i);
 }
 
@@ -84,6 +86,8 @@ void	c_animation(t_data *data, int i, int j)
 		data->img = mlx_xpm_file_to_image(data->mlx, "utils/c/c5.xpm", &k, &k);
 	else if (c == 7500)
 		data->img = mlx_xpm_file_to_image(data->mlx, "utils/c/c6.xpm", &k, &k);
+	if (!data->img)
+		ft_error("\033[0;31myou have a problem in xpm img\n");
 	if (c == 0 || c == 1500 || c == 3000 || c == 4500 || c == 6000 || c == 7500)
 		mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, j, i);
 	if (c > 7500)
