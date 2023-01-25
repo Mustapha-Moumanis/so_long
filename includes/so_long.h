@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:42:10 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/24 20:51:35 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/25 00:43:20 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,27 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <mlx.h>
+# include "../src/get_next_line.h"
+
+// linked list :
+
+typedef struct s_list
+{
+	char			*content;
+	struct s_list	*next;
+}	t_list;
+
+t_list	*ft_lstnew(char *content);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
+int		ft_lstsize(t_list *lst);
 
 // struct help :
 
 typedef struct s_data
 {
 	char	**map;
+	t_list	*tmp;
 	void	*mlx;
 	void	*img;
 	void	*mlx_win;
@@ -41,19 +56,6 @@ typedef struct s_data
 	int		row_len;
 	int		c_animation;
 }	t_data;
-
-// linked list :
-
-typedef struct s_list
-{
-	char			*content;
-	struct s_list	*next;
-}	t_list;
-
-t_list	*ft_lstnew(char *content);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-t_list	*ft_lstlast(t_list *lst);
-int		ft_lstsize(t_list *lst);
 
 // libft function
 char	*ft_strchr(const char *s, int c);
@@ -75,6 +77,9 @@ void	check_file_format(char *file_name);
 void	check_len(char **ptr);
 void	check_newline(char **ptr, char *last_line);
 int		is_valid_ext(char *file_name, char *ext);
+void	check_way(char **copy_map, int i, int j);
+void	flood_fill(char **copy_map, int i, int j, int r);
+void	check_path(t_data *data, int r);
 
 // move function
 void	move_up(t_data *data);
@@ -83,6 +88,8 @@ void	move_left(t_data *data);
 void	move_right(t_data *data);
 void	get_img(t_data *data, int i, int j);
 void	player_img(t_data *data, int d);
-
+void	get_map(char *file_name, t_list **lst);
+void	images(t_data *data);
+void	c_animation(t_data *data, int i, int j);
 
 #endif

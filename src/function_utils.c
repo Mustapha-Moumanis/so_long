@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 21:23:00 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/19 02:27:35 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/25 00:13:40 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	ft_error(char *error_msg)
 {
-	printf("Error\n%s\n", error_msg);
+	write(2, "Error\n", 7);
+	write(1, error_msg, ft_strlen(error_msg));
 	exit (0);
 }
 
@@ -23,11 +24,13 @@ int	ft_close(void)
 	write(1, "The game is closed\n", 20);
 	exit (0);
 }
+
 int	ft_winner(void)
 {
 	write(1, "Good job. you won\n", 19);
 	exit (0);
 }
+
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
@@ -47,4 +50,3 @@ int	is_valid_ext(char *file_name, char *ext)
 		return (0);
 	return (ft_strcmp(last_accur, ext) == 0);
 }
-

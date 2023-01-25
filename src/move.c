@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 23:38:33 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/24 06:18:38 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/25 02:00:23 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ void	move_up(t_data *data)
 	if (c == 'E' && data->collectible == 0)
 		ft_winner();
 }
+
 void	move_down(t_data *data)
 {
-	char c;
+	char	c;
 	char	*move;
 
 	c = data->map[data->x_p + 1][data->y_p];
@@ -62,6 +63,7 @@ void	move_down(t_data *data)
 	if (c == 'E' && data->collectible == 0)
 		ft_winner();
 }
+
 void	move_left(t_data *data)
 {
 	char	c;
@@ -87,9 +89,10 @@ void	move_left(t_data *data)
 	if (c == 'E' && data->collectible == 0)
 		ft_winner();
 }
+
 void	move_right(t_data *data)
 {
-	char c;
+	char	c;
 	char	*move;
 
 	c = data->map[data->x_p][data->y_p + 1];
