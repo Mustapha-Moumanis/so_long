@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:26:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/25 05:13:30 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/26 02:05:21 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	graphic(int col_len, int row_len, t_data *data)
 	row_len *= 75;
 	col_len *= 75;
 	data->mlx = mlx_init();
+	if (!data->mlx)
+		ft_error("\033[0;31mconnection failed\n");
 	data->mlx_win = mlx_new_window(data->mlx, row_len, col_len, "so_long");
 	images(data);
 	mlx_hook(data->mlx_win, 2, 0, key_hook, data);

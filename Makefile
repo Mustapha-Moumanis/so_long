@@ -24,9 +24,6 @@ all: $(NAME)
 $(NAME): $(FILES)
 	cc $(FLAGS) $(FILES) $(MLX) -o $(NAME)
 
-debug: $(FILES)
-	cc $(FLAGS) -fsanitize=address -g $(FILES) $(MLX) -o $(NAME) 
-
 bonus: $(BNAME)
 	
 $(BNAME): $(BFILES)

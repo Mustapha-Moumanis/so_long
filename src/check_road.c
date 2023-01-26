@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 00:40:49 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/25 05:13:49 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/26 02:06:19 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	flood_fill2(char **map, int i, int j, int r)
 	}
 }
 
-void	check_path(t_data *data, int r)
+int	check_path(t_data *data, int r)
 {
 	char	**copy_map;
 	char	**copy2_map;
@@ -104,7 +104,11 @@ void	check_path(t_data *data, int r)
 
 	i = 0;
 	copy_map = malloc((r + 1) * sizeof(char *));
+	if (!copy_map)
+		return (0);
 	copy2_map = malloc((r + 1) * sizeof(char *));
+	if (!copy2_map)
+		return (0);
 	while (data->map[i])
 	{
 		copy2_map[i] = ft_strdup(data->map[i]);
@@ -117,4 +121,5 @@ void	check_path(t_data *data, int r)
 	flood_fill2(copy2_map, data->x_p, data->y_p, r);
 	check_collectible(copy_map, 0, 0);
 	check_exit(copy2_map, 0, 0);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 00:14:27 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/25 05:13:30 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/26 02:11:53 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	get_map(char *file_name, t_list **lst)
 
 	check_file_format(file_name);
 	fd = open(file_name, O_RDONLY);
+	if (fd == -1)
+		ft_error("\033[0;31mfile doesn't exict\n");
 	while (1337)
 	{
 		s = get_next_line(fd);
@@ -45,6 +47,8 @@ void	get_map(char *file_name, t_list **lst)
 			break ;
 		ft_lstadd_back(lst, ft_lstnew(s));
 	}
+	if (ft_lstsize(*lst) < 3)
+		ft_error("\033[0;31mAt least three lines\n");
 }
 
 void	player_img(t_data *data, int d)
