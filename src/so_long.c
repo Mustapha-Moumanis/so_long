@@ -6,7 +6,7 @@
 /*   By: mmoumani <mmoumani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:26:11 by mmoumani          #+#    #+#             */
-/*   Updated: 2023/01/26 02:05:21 by mmoumani         ###   ########.fr       */
+/*   Updated: 2023/01/26 03:56:08 by mmoumani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int	main(int argc, char **argv)
 	int		i;
 
 	lst = NULL;
-	if (argc < 2)
-		return (0);
 	data = (t_data){0};
+	if (argc != 2)
+		ft_error("\033[0;31mYou have more/less 2 argument\n");
 	get_map(argv[1], &lst);
 	if (!lst)
 		return (0);
